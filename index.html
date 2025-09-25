@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poona College Admission Support Portal</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #f1c40f;
+            --accent: #e74c3c;
+            --light: #f5f5f5;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #0d2d5a);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 75, 140, 0.8), rgba(26, 75, 140, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #e6b301;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #153a6d;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 3rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* Home Page */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .announcements {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .announcement-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-date {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Application Page */
+        .application-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .application-steps:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-form {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 75, 140, 0.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        /* Documents Page */
+        .document-upload {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(26, 75, 140, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .document-list {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .document-item:last-child {
+            border-bottom: none;
+        }
+
+        .document-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .document-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* College Codes Page */
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .college-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .college-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .college-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .college-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .college-code {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .college-details {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Status Page */
+        .application-status {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-under-review {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .status-timeline:before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ddd;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .timeline-item.completed:before {
+            background: var(--success);
+        }
+
+        .timeline-item.active:before {
+            background: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.3);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .application-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .application-steps:before {
+                display: none;
+            }
+
+            .step {
+                display: flex;
+                align-items: center;
+                text-align: left;
+            }
+
+            .step-number {
+                margin: 0 15px 0 0;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNDQ4IDk2SDY0QzI4LjcgOTYgMCAxMjQuNyAwIDE2MHYxOTJjMCAzNS4zIDI4LjcgNjQgNjQgNjRoMzg0YzM1LjMgMCA2NC0yOC43IDY0LTY0VjE2MGMwLTM1LjMtMjguNy02NC02NC02NHpNMTI4IDI3MmMtMTcuNyAwLTMyLTE0LjMtMzItMzJzMTQuMy0zMiAzMi0zMiAzMiAxNC4zIDMyIDMyLTE0LjMgMzItMzIgMzJ6bTEyOCAwYy0xNy43IDAtMzItMTQuMy0zMi0zMnMxNC4zLTMyIDMyLTMyIDMyIDE0LjMgMzIgMzItMTQuMyAzMi0zMiAzMnptMTI4IDBjLTE3LjcgMC0zMi0xNC4zLTMyLTMyczE0LjMtMzIgMzItMzIgMzIgMTQuMyAzMiAzMi0xNC4zIDMyLTMyIDMyeiIvPjwvc3ZnPg==" alt="Poona College Logo">
+                    <h1>Poona College Admission Support</h1>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="application">Application</a></li>
+                        <li><a href="#" class="nav-link" data-page="documents">Documents</a></li>
+                        <li><a href="#" class="nav-link" data-page="college-codes">College Codes</a></li>
+                        <li><a href="#" class="nav-link" data-page="status">Application Status</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Welcome to Poona College Admission Portal</h2>
+            <p>Your one-stop solution for a seamless college admission experience. Get guidance, manage documents, and track your application status all in one place.</p>
+            <a href="#" class="btn" data-page="application">Start Your Application</a>
+        </div>
+    </section>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="container">
+            <h2 class="page-title">Why Choose Poona College?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Academic Excellence</h3>
+                    <p>Poona College has a legacy of 50+ years in providing quality education with experienced faculty and modern facilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Placement Opportunities</h3>
+                    <p>Strong industry connections with 90% placement rate in top companies across various sectors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Exposure</h3>
+                    <p>International collaborations and student exchange programs with universities worldwide.</p>
+                </div>
+            </div>
+
+            <div class="announcements">
+                <h2 class="page-title">Latest Announcements</h2>
+                <div class="announcement-item">
+                    <div class="announcement-date">June 15, 2023</div>
+                    <h3>Admission Process for Academic Year 2023-24 Begins</h3>
+                    <p>The online application portal is now open for all courses. Last date to apply is July 15, 2023.</p>
+                </div>
+                <div class="announcement-item">
+                    <div class="announcement-date">June 10, 2023</div>
+                    <h3>Scholarship Applications Open</h3>
+                    <p>Merit-based and need-based scholarship applications are now available. Deadline: June 30, 2023.</p>
+                </div>
+                <div class="announcement-item">
+                    <div class="announcement-date">June 5, 2023</div>
+                    <h3>Campus Tour Schedule</h3>
+                    <p>Guided campus tours available every Saturday. Register online to book your slot.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Page -->
+    <section id="application" class="page">
+        <div class="container">
+            <h2 class="page-title">Admission Application</h2>
+            
+            <div class="application-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Personal Details</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Academic Information</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Course Selection</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Review & Submit</div>
+                </div>
+            </div>
+
+            <div class="step-form">
+                <form id="application-form">
+                    <div class="form-step active" data-step="1">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step="2">
+                        <div class="form-group">
+                            <label for="high-school">High School Name</label>
+                            <input type="text" id="high-school" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="high-school-marks">High School Percentage</label>
+                            <input type="number" id="high-school-marks" class="form-control" min="0" max="100" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="intermediate">Intermediate College</label>
+                            <input type="text" id="intermediate" class="form-control" required>
+                        </div>
+                            <div class="form-group">
+                            <label for="intermediate-marks">Intermediate Percentage</label>
+                            <input type="number" id="intermediate-marks" class="form-control" min="0" max="100" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step="3">
+                        <div class="form-group">
+                            <label for="course">Select Course</label>
+                            <select id="course" class="form-control" required>
+                                <option value="">-- Select a Course --</option>
+                                <option value="bsc-cs">B.Sc. Computer Science</option>
+                                <option value="bcom">B.Com</option>
+                                <option value="ba-english">B.A. English</option>
+                                <option value="bsc-math">B.Sc. Mathematics</option>
+                                <option value="bba">BBA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preference">Course Preference (if any)</label>
+                            <input type="text" id="preference" class="form-control" placeholder="Alternative course choices">
+                        </div>
+                    </div>
+
+                    <div class="form-step" data-step="4">
+                        <div class="application-summary">
+                            <h3>Application Summary</h3>
+                            <div id="summary-content"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="terms" required> I agree to the terms and conditions
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn" id="prev-btn" style="display: none;">Previous</button>
+                        <button type="button" class="btn btn-primary" id="next-btn">Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents Page -->
+    <section id="documents" class="page">
+        <div class="container">
+            <h2 class="page-title">Document Management</h2>
+            
+            <div class="document-upload">
+                <h3>Upload Required Documents</h3>
+                <div class="upload-area" id="upload-area">
+                    <i>📁</i>
+                    <p>Drag & drop files here or click to browse</p>
+                    <input type="file" id="file-input" multiple style="display: none;">
+                </div>
+                <p>Supported formats: PDF, JPG, PNG (Max size: 5MB per file)</p>
+            </div>
+
+            <div class="document-list">
+                <h3>Required Documents</h3>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>High School Marksheet</h4>
+                        <p>Upload your 10th standard marksheet</p>
+                    </div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Intermediate Marksheet</h4>
+                        <p>Upload your 12th standard marksheet</p>
+                    </div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Transfer Certificate</h4>
+                        <p>TC from your previous institution</p>
+                    </div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Identity Proof</h4>
+                        <p>Aadhar Card, Passport, or Driver's License</p>
+                    </div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Passport Size Photo</h4>
+                        <p>Recent passport size photograph</p>
+                    </div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- College Codes Page -->
+    <section id="college-codes" class="page">
+        <div class="container">
+            <h2 class="page-title">College Codes & Information</h2>
+            
+            <div class="search-box">
+                <input type="text" id="college-search" placeholder="Search for colleges...">
+            </div>
+
+            <div class="college-cards">
+                <div class="college-card">
+                    <h3>Poona College of Arts & Science</h3>
+                    <div class="college-code">PCAS-2023</div>
+                    <div class="college-details">
+                        <p><strong>Location:</strong> Camp, Pune</p>
+                        <p><strong>Courses:</strong> B.A., B.Sc., B.Com</p>
+                        <p><strong>Affiliation:</strong> University of Pune</p>
+                    </div>
+                    <button class="btn">View Details</button>
+                </div>
+                <div class="college-card">
+                    <h3>Poona College of Commerce</h3>
+                    <div class="college-code">PCC-2023</div>
+                    <div class="college-details">
+                        <p><strong>Location:</strong> Shivajinagar, Pune</p>
+                        <p><strong>Courses:</strong> B.Com, BBA, M.Com</p>
+                        <p><strong>Affiliation:</strong> University of Pune</p>
+                    </div>
+                    <button class="btn">View Details</button>
+                </div>
+                <div class="college-card">
+                    <h3>Poona Institute of Management</h3>
+                    <div class="college-code">PIM-2023</div>
+                    <div class="college-details">
+                        <p><strong>Location:</strong> Koregaon Park, Pune</p>
+                        <p><strong>Courses:</strong> MBA, PGDM</p>
+                        <p><strong>Affiliation:</strong> AICTE Approved</p>
+                    </div>
+                    <button class="btn">View Details</button>
+                </div>
+                <div class="college-card">
+                    <h3>Poona College of Engineering</h3>
+                    <div class="college-code">PCE-2023</div>
+                    <div class="college-details">
+                        <p><strong>Location:</strong> Hadapsar, Pune</p>
+                        <p><strong>Courses:</strong> B.Tech, M.Tech</p>
+                        <p><strong>Affiliation:</strong> AICTE Approved</p>
+                    </div>
+                    <button class="btn">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Page -->
+    <section id="status" class="page">
+        <div class="container">
+            <h2 class="page-title">Application Status</h2>
+            
+            <div class="application-status">
+                <div class="status-header">
+                    <h3>Application #PC2023-00125</h3>
+                    <div class="status-badge status-under-review">Under Review</div>
+                </div>
+                
+                <div class="status-timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-date">June 10, 2023</div>
+                        <h4>Application Submitted</h4>
+                        <p>Your application has been successfully submitted.</p>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-date">June 12, 2023</div>
+                        <h4>Document Verification</h4>
+                        <p>All documents have been received and are under verification.</p>
+                    </div>
+                    <div class="timeline-item active">
+                        <div class="timeline-date">June 15, 2023</div>
+                        <h4>Application Review</h4>
+                        <p>Your application is currently being reviewed by the admission committee.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Expected: June 25, 2023</div>
+                        <h4>Admission Decision</h4>
+                        <p>Final decision will be communicated via email.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="document-list">
+                <h3>Document Status</h3>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>High School Marksheet</h4>
+                        <p>Uploaded on June 10, 2023</p>
+                    </div>
+                    <div class="document-status status-approved">Approved</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Intermediate Marksheet</h4>
+                        <p>Uploaded on June 10, 2023</p>
+                    </div>
+                    <div class="document-status status-approved">Approved</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Transfer Certificate</h4>
+                        <p>Uploaded on June 11, 2023</p>
+                    </div>
+                    <div class="document-status status-pending">Under Review</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-info">
+                        <h4>Identity Proof</h4>
+                        <p>Uploaded on June 10, 2023</p>
+                    </div>
+                    <div class="document-status status-approved">Approved</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Poona College, Camp, Pune</p>
+                    <p>Email: admissions@poonacollege.edu</p>
+                    <p>Phone: +91-20-12345678</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Admission Process</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Important Dates</h3>
+                    <ul>
+                        <li>Application Deadline: July 15, 2023</li>
+                        <li>Entrance Test: July 25, 2023</li>
+                        <li>Merit List: August 5, 2023</li>
+                        <li>Classes Begin: August 15, 2023</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Poona College. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding page
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Application form steps
+            const steps = document.querySelectorAll('.step');
+            const formSteps = document.querySelectorAll('.form-step');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentStep = 1;
+            
+            function updateFormSteps() {
+                // Update step indicators
+                steps.forEach(step => {
+                    const stepNum = parseInt(step.getAttribute('data-step'));
+                    step.classList.remove('active', 'completed');
+                    
+                    if (stepNum < currentStep) {
+                        step.classList.add('completed');
+                    } else if (stepNum === currentStep) {
+                        step.classList.add('active');
+                    }
+                });
+                
+                // Update form steps
+                formSteps.forEach(step => {
+                    step.classList.remove('active');
+                    if (parseInt(step.getAttribute('data-step')) === currentStep) {
+                        step.classList.add('active');
+                    }
+                });
+                
+                // Update buttons
+                prevBtn.style.display = currentStep === 1 ? 'none' : 'inline-block';
+                nextBtn.textContent = currentStep === 4 ? 'Submit' : 'Next';
+            }
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentStep < 4) {
+                    currentStep++;
+                    updateFormSteps();
+                    
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                } else {
+                    // Submit form
+                    if (document.getElementById('terms').checked) {
+                        alert('Application submitted successfully!');
+                        // In a real application, you would send data to a server here
+                    } else {
+                        alert('Please agree to the terms and conditions.');
+                    }
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateFormSteps();
+                }
+            });
+            
+            function updateSummary() {
+                const summaryContent = document.getElementById('summary-content');
+                const formData = new FormData(document.getElementById('application-form'));
+                
+                let summaryHTML = `
+                    <p><strong>Name:</strong> ${document.getElementById('full-name').value}</p>
+                    <p><strong>Email:</strong> ${document.getElementById('email').value}</p>
+                    <p><strong>Phone:</strong> ${document.getElementById('phone').value}</p>
+                    <p><strong>Date of Birth:</strong> ${document.getElementById('dob').value}</p>
+                    <p><strong>High School:</strong> ${document.getElementById('high-school').value} (${document.getElementById('high-school-marks').value}%)</p>
+                    <p><strong>Intermediate:</strong> ${document.getElementById('intermediate').value} (${document.getElementById('intermediate-marks').value}%)</p>
+                    <p><strong>Selected Course:</strong> ${document.getElementById('course').options[document.getElementById('course').selectedIndex].text}</p>
+                `;
+                
+                if (document.getElementById('preference').value) {
+                    summaryHTML += `<p><strong>Course Preference:</strong> ${document.getElementById('preference').value}</p>`;
+                }
+                
+                summaryContent.innerHTML = summaryHTML;
+            }
+            
+            // Document upload functionality
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('file-input');
+            
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = 'var(--primary)';
+                this.style.background = 'rgba(26, 75, 140, 0.1)';
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                this.style.borderColor = '#ddd';
+                this.style.background = 'transparent';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#ddd';
+                this.style.background = 'transparent';
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleFiles(this.files);
+                }
+            });
+            
+            function handleFiles(files) {
+                // In a real application, you would upload files to a server here
+                alert(`Selected ${files.length} file(s) for upload. In a real application, these would be uploaded to the server.`);
+                
+                // Reset file input
+                fileInput.value = '';
+            }
+            
+            // College search functionality
+            const collegeSearch = document.getElementById('college-search');
+            const collegeCards = document.querySelectorAll('.college-card');
+            
+            collegeSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                collegeCards.forEach(card => {
+                    const collegeName = card.querySelector('h3').textContent.toLowerCase();
+                    if (collegeName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
